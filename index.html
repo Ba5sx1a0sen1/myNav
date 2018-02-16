@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,18 +50,38 @@
             index2 = 0
             while(index2 < row['length']){ //0-9 0-8 0-6
                 kbd = document.createElement('kbd')
-                kbd.textContent = row[index2]
+                span = document.createElement('span')
+                span.textContent = row[index2]
+                span.className = 'text'
+                kbd.appendChild(span)
                 kbd.className = 'key'
                 button = document.createElement('button')
                 button.textContent = '编辑'
                 button.id = row[index2] //button只是容器,最后只存下最后一个元素的值
                 button.onclick=function(asdasd){
                    key = asdasd['target']['id'] //target q w e r t
+                   img2 = asdasd['target'].previousSibling
                    inputSite = prompt('给我一个网址') // 存储变更的值
                    hash[key] = inputSite // hash 变更
+                   img2.src = "http://"+ inputSite + '/favicon.ico'
+                   img2.onerror = function(e){
+                     e.target.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png"
+                   }
                    localStorage.setItem('zzz',JSON.stringify(hash))
+
                 }
 
+                img = document.createElement('img')
+                if(hash[row[index2]]){
+                    img.src = "http://"+hash[row[index2]] + '/favicon.ico' 
+                }else{
+                    img.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png"
+                }
+                img.onerror = function(e){
+                    e.target.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png"
+                }
+
+                kbd.appendChild(img)
                 kbd.appendChild(button)
                 div.appendChild(kbd)
                 index2 = index2 + 1
